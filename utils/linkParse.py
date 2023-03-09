@@ -145,6 +145,6 @@ def getLink(raw_message):
         case default:
             noParse = True
     if noParse:
-        pass
+        return '[ERROR] 无法识别的命令！'
     else:
         return url

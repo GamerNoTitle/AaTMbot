@@ -3,7 +3,7 @@ import logging
 def logger(log_level, log_file):
     logger = logging.getLogger()
     logger.setLevel(log_level)
-    BASIC_FORMAT = "%(asctime)s:%(levelname)s:%(message)s"
+    BASIC_FORMAT = "[%(levelname)s]%(asctime)s: %(message)s"
     DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
     formatter = logging.Formatter(BASIC_FORMAT, DATE_FORMAT)
     console = logging.StreamHandler() # 输出到控制台的handler

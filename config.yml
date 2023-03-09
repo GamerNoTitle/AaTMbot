@@ -2,30 +2,42 @@ host:
   address: 127.0.0.1
   port: 2233
 
-log:
+log:  # 可选的为 DEBUG | INFO | WARN | ERROR | CRITICAL
   log-level: INFO
 
-settings:
+options:
   bot-qq: 1484506387
+  cqhttp: 
+    address: http://127.0.0.1:5700
+    access-token: AaTMbot
+  auto-recall:  # 自动撤回
+    enable: true
+    delay: 60
   groups:
     - 187053428
   private:
     - 422500242
-  
-api:
+  operator: 
+    - 422500242
+
+########## Keep the following content unless you know what you are doing!!! ##########
+##########               请不要修改下面的内容，除非你知道你在干什么！           ##########
+
+api:  # api列表，一般来说请不要动这个
   address: https://wfapi.bili33.top
   warframe: /wf
   warframe-path:
-    alerts: /dev/alerts # 警报
-    news: /dev/news     # 新闻（好像没啥用，一般没人看的吧）
+    alerts: /robot/alerts # 警报
+    news: /robot/news     # 新闻（好像没啥用，一般没人看的吧）
     events: /robot/events # 活动（热美亚啥的）
     sortie: /dev/sortie # 突击
     ostrons: /robot/Ostrons # 地球赏金
     solaris: /robot/Solaris # 金星赏金
     entratiSyndicate: /robot/EntratiSyndicate # 火卫二赏金
-    fissures: /dev/fissures # 虚空裂缝
+    fissures: /robot/fissures # 虚空裂缝
     flashSales: /robot/flashSales # 每日促销（商店里面的）
     invasions: /robot/invasions # 入侵
+    invasions-json: /dev/invasions  # 入侵（返回json格式，用于推送）
     voidTrader: /robot/voidTrader # 奸商
     dailyDeals: /robot/dailyDeals # Darvo的特惠
     earthCycle: /robot/earthCycle # 地球时间（USELESS，谁看这个呀，除非你要做蝶妹的任务）
