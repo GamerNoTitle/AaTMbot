@@ -1,0 +1,40 @@
+host:
+  address: 127.0.0.1
+  port: 2233
+
+log:
+  log-level: INFO
+
+settings:
+  bot-qq: 1484506387
+  groups:
+    - 187053428
+  private:
+    - 422500242
+  
+api:
+  address: https://wfapi.bili33.top
+  warframe: /wf
+  warframe-path:
+    alerts: /dev/alerts # 警报
+    news: /dev/news     # 新闻（好像没啥用，一般没人看的吧）
+    events: /robot/events # 活动（热美亚啥的）
+    sortie: /dev/sortie # 突击
+    ostrons: /robot/Ostrons # 地球赏金
+    solaris: /robot/Solaris # 金星赏金
+    entratiSyndicate: /robot/EntratiSyndicate # 火卫二赏金
+    fissures: /dev/fissures # 虚空裂缝
+    flashSales: /robot/flashSales # 每日促销（商店里面的）
+    invasions: /robot/invasions # 入侵
+    voidTrader: /robot/voidTrader # 奸商
+    dailyDeals: /robot/dailyDeals # Darvo的特惠
+    earthCycle: /robot/earthCycle # 地球时间（USELESS，谁看这个呀，除非你要做蝶妹的任务）
+    cetusCycle: /robot/cetusCycle # 西图斯时间（跟上面那个地球时间是不一样的）
+    constructionProgress: /robot/constructionProgress # 巨人战舰和豺狼舰队
+    vallisCycle: /robot/vallisCycle # 索拉里斯时间
+    nightwave: /robot/nightwave # 午夜电波任务
+    arbitration: /robot/arbitration # 仲裁
+    cambionCycle: /robot/cambionCycle # 火卫二时间（FASS还是VOME）
+    zarimanCycle: /robot/zarimanCycle # 扎里曼占领情况
+  market: /wm/robot/
+  riven: /rm/robot/
