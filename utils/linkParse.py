@@ -143,6 +143,9 @@ def getLink(raw_message):
         case '/扎里曼派系':
             url += config['api']['warframe']
             url += config['api']['warframe-path']['zarimanCycle']
+        case '/zarimancycle':
+            url += config['api']['warframe']
+            url += config['api']['warframe-path']['zarimanCycle']
         case default:
             noParse = True
     if noParse:
