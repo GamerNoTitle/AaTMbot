@@ -3,7 +3,7 @@ from parse import parse
 from utils.logger import logger
 from utils.message import message
 from utils.responseParse import *
-from utils.const import help_msg
+from utils.const import help_msg, about_msg
 import time
 import requests
 import yaml
@@ -62,6 +62,8 @@ def Handler():
             return 'Hello World'    # 非命令直接忽略
         if msg.message in ['/help', '/帮助']:
             content = help_msg
+        elif msg.message in ['/about', '/关于']:
+            content = about_msg
         else:
             link = getLink(msg.message)
             if not link.startswith('https://'):

@@ -1,4 +1,5 @@
 help_msg = '''/帮助\t\t显示本帮助文档
+/关于\t\t显示bot信息
 
 === WARFRAME游戏内容相关功能 ===
 /警报\t\t显示当前可用警报
@@ -30,4 +31,15 @@ help_msg = '''/帮助\t\t显示本帮助文档
 
 === Riven.market 相关功能 ===
 /紫卡 <武器名称>\t查询相应武器的紫卡在riven.market上的价格（截取前5条价格最低）
+'''
+
+about_msg = '''===== AaTM Bot 关于 =====
+AaTM Bot (Alerts & Tenno's Market Bot) 是一个用于QQ的查询bot
+本来是心血来潮开发的，既然写出来了就开源出来给大家用吧！
+开源地址（有条件的可以给个STAR呗）：https://github.com/GamerNoTitle/AaTMbot
+
+开发者：GamerNoTitle
+图标设计：Vanilluv
+
+感谢氏族的小伙伴们寄予的支持！
 '''
