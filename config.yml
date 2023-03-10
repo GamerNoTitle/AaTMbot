@@ -5,8 +5,22 @@ host:
 log:  # 可选的为 DEBUG | INFO | WARN | ERROR | CRITICAL
   log-level: INFO
 
+auto-push:
+  alerts:
+    enable: true
+    delay: 60
+    channel:
+      groups: true
+      private: false
+  invasions:  # 暂时没做这个，现在没有什么卵用
+    enable: true
+    delay: 60
+    channel:
+      groups: true
+      private: false
+
 options:
-  bot-qq: 1484506387
+  bot-qq: 2436146394
   cqhttp: 
     address: http://127.0.0.1:5700
     access-token: AaTMbot
@@ -15,6 +29,7 @@ options:
     delay: 60
   groups:
     - 187053428
+    - 678161419
   private:
     - 422500242
   operator: 
@@ -37,7 +52,6 @@ api:  # api列表，一般来说请不要动这个
     fissures: /robot/fissures # 虚空裂缝
     flashSales: /robot/flashSales # 每日促销（商店里面的）
     invasions: /robot/invasions # 入侵
-    invasions-json: /dev/invasions  # 入侵（返回json格式，用于推送）
     voidTrader: /robot/voidTrader # 奸商
     dailyDeals: /robot/dailyDeals # Darvo的特惠
     earthCycle: /robot/earthCycle # 地球时间（USELESS，谁看这个呀，除非你要做蝶妹的任务）
