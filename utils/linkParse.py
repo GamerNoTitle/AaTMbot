@@ -146,9 +146,18 @@ def getLink(raw_message):
         case default:
             noParse = True
     if noParse:
-        if raw_message.startswith('/市场'):
+        if raw_message.startswith('/市场') or raw_message.startswith('/market'):
             parsed = parse('/市场 {item}', raw_message)
             url += config['api']['market']
+            if type(parsed) == type(None):
+                parsed = parse('/market {item}', raw_message)
+            url += parsed['item']
+            return url
+        elif raw_message.startswith('/紫卡') or raw_message.startswith('/riven'):
+            parsed = parse('/紫卡 {item}', raw_message)
+            url += config['api']['riven']
+            if type(parsed) == type(None):
+                parsed = parse('/riven {item}', raw_message)
             url += parsed['item']
             return url
         else:
