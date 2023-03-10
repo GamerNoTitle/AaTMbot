@@ -199,3 +199,7 @@ servers:
 ```
 
 当然有对应的英文命令，但是我这边群友英语不太好就没有写英文的命令帮助……
+
+## 赞助
+
+可以在游戏内直接送我礼物，我的ID是`Gamer.bili`，当然也有传统的方法，请访问[Sponsors - 请给我钱！QWQ (bili33.top)](https://bili33.top/sponsors/)
