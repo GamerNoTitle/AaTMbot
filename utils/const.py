@@ -34,7 +34,7 @@ help_msg = '''/帮助\t\t显示本帮助文档
 '''
 
 about_msg = '''===== AaTM Bot 关于 =====
-AaTM Bot (Alerts & Tenno's Market Bot) 是一个用于QQ的查询bot
+AaTM Bot (Alerts and Tenno's Market Bot) 是一个用于QQ的查询bot
 本来是心血来潮开发的，既然写出来了就开源出来给大家用吧！
 开源地址（有条件的可以给个STAR呗）：https://github.com/GamerNoTitle/AaTMbot
 
