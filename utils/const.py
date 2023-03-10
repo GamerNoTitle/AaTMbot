@@ -24,5 +24,7 @@ help_msg = '''=== WARFRAME游戏内容相关功能 ===
 /扎里曼派系\t同上
 
 === Warframe.market 相关功能 ===
+/市场 <物品名称>\t查询物品在Warframe.market上的价格
 
+=== Riven.market 相关功能 ===
 '''

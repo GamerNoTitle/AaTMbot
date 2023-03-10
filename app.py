@@ -1,4 +1,5 @@
 from flask import Flask, request
+from parse import parse
 from utils.logger import logger
 from utils.message import message
 from utils.responseParse import *
@@ -66,15 +67,19 @@ def Handler():
             if not link.startswith('https://'):
                 log.debug(f'消息 {msg.message} 无法解析出对应的链接')
                 content = link
-            elif not 'robot' in link:
+            elif '/wf/dev/' in link and not 'robot' in link:
                 log.debug(f'由消息 {msg.message} 解析得到api链接 {link}')
                 content = json.loads(getDetail(link))
                 access_protocol = link.split('/')[-1]
                 json_parser = {
                     'sortie': sortieParser,
-                    'invasions': invasionParser
+                    'invasions': invasionParser,
                 }
                 content = json_parser[access_protocol](content, invasions)
+            elif '/wm/dev/' in link:
+                log.debug(f'由消息 {msg.message} 解析得到api链接 {link}')
+                content = json.loads(getDetail(link))
+                content = marketParser(content)
             else:
                 log.debug(f'由消息 {msg.message} 解析得到api链接 {link}')
                 content = getDetail(link)

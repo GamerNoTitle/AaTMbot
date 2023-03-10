@@ -1,4 +1,5 @@
 import yaml
+from parse import parse
 
 with open('./config.yml', encoding='utf8') as f:
     config = yaml.load(f.read(), Loader=yaml.SafeLoader)
@@ -145,6 +146,12 @@ def getLink(raw_message):
         case default:
             noParse = True
     if noParse:
-        return '[ERROR] 无法识别的命令！'
+        if raw_message.startswith('/市场'):
+            parsed = parse('/市场 {item}', raw_message)
+            url += config['api']['market']
+            url += parsed['item']
+            return url
+        else:
+            return '[ERROR] 无法识别的命令！'
     else:
         return url

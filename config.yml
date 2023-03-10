@@ -3,7 +3,7 @@ host:
   port: 2233
 
 log:  # 可选的为 DEBUG | INFO | WARN | ERROR | CRITICAL
-  log-level: INFO
+  log-level: DEBUG
 
 auto-push:
   alerts:
@@ -62,5 +62,5 @@ api:  # api列表，一般来说请不要动这个
     arbitration: /robot/arbitration # 仲裁
     cambionCycle: /robot/cambionCycle # 火卫二时间（FASS还是VOME）
     zarimanCycle: /robot/zarimanCycle # 扎里曼占领情况
-  market: /wm/robot/
+  market: /wm/dev/
   riven: /rm/robot/
