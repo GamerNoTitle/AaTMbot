@@ -9,7 +9,11 @@
     <p>
         Dev: <a href='https://bili33.top'>GamerNoTitle</a> | Icon: <a href='https://github.com/Vanilluv'>Vanilluv</a>
     </p>
+    <p>
+        体验请加QQ：2436146394
+    </p>
 </div>
+
 
 这是一个心血来潮写的Warframe查询用QQbot，他实现了以下功能
 
@@ -162,6 +166,18 @@ servers:
 以上就是配置的简略过程，要更详细的过程要等晚点我在自己的网站上发
 
 ## 命令列表
+
+| 命令  | 别名      | 功能                 |
+| ----- | --------- | -------------------- |
+| /帮助 | `/help`   | 显示帮助文档         |
+| /警报 | `/alerts` | 显示当前可用警报     |
+| /新闻 | `/news`   | 显示Warframe官方新闻 |
+| /活动 | `/events` | 显示游戏内活动       |
+| /突击 | `/sortie` | 显示今日突击         |
+
+
+
+
 
 ```
 /帮助				显示本帮助文档
