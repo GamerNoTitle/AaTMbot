@@ -57,12 +57,12 @@ def Handler():
             _thread.start_new_thread(
                 autoRecall, (msg.message_id, config['options']['auto-recall']['delay']))
     else:
-        if not msg.message.startswith('/'):
+        if not msg.message.startswith('!!'):
             log.debug(f'检测到非命令消息 {msg.message}，进行忽略')
             return 'Hello World'    # 非命令直接忽略
-        if msg.message in ['/help', '/帮助']:
+        if msg.message in ['!!help', '!!帮助']:
             content = help_msg
-        elif msg.message in ['/about', '/关于']:
+        elif msg.message in ['!!about', '!!关于']:
             content = about_msg
         else:
             link = getLink(msg.message)
