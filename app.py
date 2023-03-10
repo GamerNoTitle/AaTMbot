@@ -132,5 +132,5 @@ def autoPushAlert():    # 自动推送警报任务
 if __name__ == '__main__':  # 主函数
     if config['auto-push']['alerts']['enable']:
         log.info(f'检测到自动撤回启用，每次bot消息发送后将在 {config["options"]["auto-recall"]["delay"]} 秒后自动撤回')
-        _thread.start_new_thread(autoPushAlert)
+        _thread.start_new_thread(autoPushAlert, None)
     app.run(host=host, port=port, debug=False)
