@@ -97,9 +97,9 @@ def autoRecall(msg_id, delay):  # 自动撤回
 
 def msgSender(msg: message, content):   # 消息发送
     log.debug(f'正在尝试进行消息发送……')
-    if msg.type == 'private' and (msg.user_id in config['options']['private'] or '*' in config['options']['private']):
+    if msg.type == 'private' and (msg.user_id in config['options']['private'] or 0 in config['options']['private']):
         message = f'[CQ:reply,id={msg.message_id}]{content}'
-    elif msg.type == 'group' and (msg.group_id in config['options']['groups'] or '*' in config['options']['groups']):
+    elif msg.type == 'group' and (msg.group_id in config['options']['groups'] or 0 in config['options']['groups']):
         message = f'[CQ:reply,id={msg.message_id}][CQ:at,qq={msg.user_id}]{content}'
     response = requests.get(
         f'{config["options"]["cqhttp"]["address"]}/send_msg?user_id={msg.user_id}&message_type={msg.type}&message={message}&group_id={msg.group_id}&access_token={config["options"]["cqhttp"]["access-token"]}')
