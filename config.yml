@@ -3,7 +3,7 @@ host:
   port: 2233
 
 log:  # 可选的为 DEBUG | INFO | WARN | ERROR | CRITICAL
-  log-level: DEBUG
+  log-level: INFO
 
 auto-push:
   alerts:
@@ -28,12 +28,11 @@ options:
     enable: true
     delay: 60
   groups:
-    - 187053428
-    - 678161419
+    - -1
   private:
-    - 422500242
+    - -1
   operator: 
-    - 422500242
+    - -1
 
 ########## Keep the following content unless you know what you are doing!!! ##########
 ##########               请不要修改下面的内容，除非你知道你在干什么！           ##########
