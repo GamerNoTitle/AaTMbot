@@ -99,11 +99,14 @@ def msgSender(msg: message, content):   # 消息发送
     log.debug(f'正在尝试进行消息发送……')
     if msg.type == 'private' and (msg.user_id in config['options']['private'] or 0 in config['options']['private']):
         message = f'[CQ:reply,id={msg.message_id}]{content}'
+        response = requests.get(
+            f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type={msg.type}&message={message}&user_id={msg.user_id}&access_token={config["options"]["cqhttp"]["access-token"]}')
+        log.debug(f'通过调用链接 {config["options"]["cqhttp"]["address"]}/send_msg?&message_type={msg.type}&message={message}&user_id={msg.user_id}&access_token={config["options"]["cqhttp"]["access-token"]} 发送了消息')
     elif msg.type == 'group' and (msg.group_id in config['options']['groups'] or 0 in config['options']['groups']):
         message = f'[CQ:reply,id={msg.message_id}][CQ:at,qq={msg.user_id}]{content}'
-    response = requests.get(
-        f'{config["options"]["cqhttp"]["address"]}/send_msg?user_id={msg.user_id}&message_type={msg.type}&message={message}&group_id={msg.group_id}&access_token={config["options"]["cqhttp"]["access-token"]}')
-    log.debug(f'通过调用链接 {config["options"]["cqhttp"]["address"]}/send_msg 发送了消息，query参数为 user_id={msg.user_id}&message_type={msg.type}&message={message}&group_id={msg.group_id}&access_token={config["options"]["cqhttp"]["access-token"]}')
+        response = requests.get(
+            f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type={msg.type}&message={message}&group_id={msg.group_id}&access_token={config["options"]["cqhttp"]["access-token"]}')
+        log.debug(f'通过调用链接 {config["options"]["cqhttp"]["address"]}/send_msg?&message_type={msg.type}&message={message}&group_id={msg.group_id}&access_token={config["options"]["cqhttp"]["access-token"]} 发送了消息')
 
 
 def getDetail(link):    # 通过requests调用API获得详细信息
