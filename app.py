@@ -112,7 +112,7 @@ def getDetail(link):    # 通过requests调用API获得详细信息
     return response
 
 
-def autoPushAlert():    # 自动推送警报任务
+def autoPushAlert(*args):    # 自动推送警报任务
     response = requests.get(
         f"{config['api']['address']}{config['api']['warframe']}{config['api']['warframe-path']['alerts']}")
     if response.text != '暂无警报事件' and previous_alerts != response.text:
