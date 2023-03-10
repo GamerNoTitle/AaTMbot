@@ -1,18 +1,24 @@
-host:
+host: 
+  # address为监听的地址，如果要本地监听请输入localhost或者127.0.0.1，如果要部署在公网请输入0.0.0.0
+  # port是监听的端口，根据自己需要修改即可
   address: 127.0.0.1
   port: 2233
 
-log:  # 可选的为 DEBUG | INFO | WARN | ERROR | CRITICAL
+log:  # log的等级，可选的为 DEBUG | INFO | WARN | ERROR | CRITICAL
   log-level: INFO
 
 auto-push:
+  # 这个是自动推送
   alerts:
+    # 这一节是警报的自动推送（莲妈的赏赐之类的），enable是开关，delay是隔多久检测一次（单位是秒，不要设置得太低，我的api吃不消，自建api请忽略本提示）
+    # channel是推送到什么地方，groups就是QQ群，private就是私聊，前提条件是bot要在群里/与私聊对方为好友
     enable: true
     delay: 60
     channel:
       groups: true
       private: false
   invasions:  # 暂时没做这个，现在没有什么卵用
+    # 这一节是入侵，本来想做的来着但是好像并没有什么必要，先搁置了，配置的作用跟上面是一样的
     enable: true
     delay: 60
     channel:
@@ -20,18 +26,24 @@ auto-push:
       private: false
 
 options:
+  # 这里是一些配置，bot-qq就是用于发送消息的bot的QQ号（因为涉及到自动撤回所以请正确填写）
   bot-qq: 2436146394
   cqhttp: 
+    # 这个是cqhttp的地址，在address处填写你的cqhttp的http监听地址，access-token处填写你的cqhttp的鉴权token
     address: http://127.0.0.1:5700
     access-token: AaTMbot
   auto-recall:  # 自动撤回
+    # enable就是是否开启，delay就是隔多久进行撤回，单位是秒
     enable: true
     delay: 60
   groups:
+    # 进行响应的群组，就是对哪些群组的消息进行响应，没有在这里填写群号的群组即使发送了指令也不会有相应，输入*表示对所有群组进行响应，建议输入*的同时输入你需要进行呢警报推送的群号，要不然警报推送推不过去的
     - -1
   private:
+    # 进行响应的私聊，跟群组的逻辑差不多，同样用*来表示对所有响应，同样也影响警报的推送
     - -1
   operator: 
+    # 机器人管理员的QQ号，管理部分还没做好
     - -1
 
 ########## Keep the following content unless you know what you are doing!!! ##########
