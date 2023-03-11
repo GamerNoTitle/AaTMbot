@@ -75,7 +75,6 @@ def fourInOneCycle(cetusCycle, VallisCycle, cambionCycle, zarimanCycle):
     zariman = json.loads(requests.get(zarimanCycle).text)
     zarimanToState = 'Grineer' if zariman['isCorpus'] else 'Corpus'
     msg = f'''===== 当前开放世界时间如下 =====
-
 希图斯：{cetus['timeLeft']} 到 {cetusToState}
 金星平原：{vallis['timeLeft']} 到 {vallisToState}
 魔胎之境：{cambion['timeLeft']} 到 {cambionToState}
