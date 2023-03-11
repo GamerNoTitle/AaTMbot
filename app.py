@@ -136,12 +136,12 @@ def autoPushAlert(*args):    # 自动推送警报任务
                     alerts.append(alert['id'])
                     with open('alerts.txt', 'at', encoding='utf8') as f:
                         f.write(f'{alert["id"]}\n')
-                    msg += f'''任务地点：{alert['mission']['node']}
-    任务类型：{alert['mission']['type']}
-    任务派系：{alert['mission']['faction']} ({alert['mission']['minEnemyLevel']} - {alert['mission']['maxEnemyLevel']})
-    任务奖励：{alert['mission']['reward']['asString']}
-    剩余时间：{alert['eta']}
-    '''
+                    msg = msg + f'''任务地点：{alert['mission']['node']}
+任务类型：{alert['mission']['type']}
+任务派系：{alert['mission']['faction']} ({alert['mission']['minEnemyLevel']} - {alert['mission']['maxEnemyLevel']})
+任务奖励：{alert['mission']['reward']['asString']}
+剩余时间：{alert['eta']}
+'''
             if config['auto-push']['alerts']['channel']['groups']:
                 groups = config['options']['groups']
                 for group in groups:
