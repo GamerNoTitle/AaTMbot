@@ -147,8 +147,8 @@ def autoPushAlert(*args):    # 自动推送警报任务
 任务奖励：{alert['mission']['reward']['asString']}
 剩余时间：{alert['eta']}
 '''
-            log.debug(f'已完成推送消息的构建：{msg}')
             if new_alert:
+                log.debug(f'已完成推送消息的构建：{msg}')
                 log.info('有未推送的警报任务，正在进行推送……')
                 if config['auto-push']['alerts']['channel']['groups']:
                     groups = config['options']['groups']
