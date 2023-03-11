@@ -125,14 +125,17 @@ def getDetail(link):    # 通过requests调用API获得详细信息
 
 
 def autoPushAlert(*args):    # 自动推送警报任务
+    log.info('警报自动推送已启用，将在有新的警报时自动推送！')
     while True:
         msg = f'AaTMbot 发现了新的警报任务！\n'
         response = requests.get(
             f"{config['api']['address']}{config['api']['warframe']}{config['api']['warframe-path']['alerts-autopush']}")
         data = json.loads(response.text)
         if data != []:
+            log.debug('检测到当前有警报任务，正在处理……')
             for alert in data:
                 if alert['id'] not in alerts:
+                    log.debug(f'检测到{alert["id"]}不在{alerts}中，即将进行推送')
                     alerts.append(alert['id'])
                     with open('alerts.txt', 'at', encoding='utf8') as f:
                         f.write(f'{alert["id"]}\n')
@@ -142,6 +145,7 @@ def autoPushAlert(*args):    # 自动推送警报任务
 任务奖励：{alert['mission']['reward']['asString']}
 剩余时间：{alert['eta']}
 '''
+            log.debug(f'已完成推送消息的构建：{msg}')
             if config['auto-push']['alerts']['channel']['groups']:
                 groups = config['options']['groups']
                 for group in groups:
