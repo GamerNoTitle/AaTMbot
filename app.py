@@ -60,7 +60,7 @@ def Handler():
     log.info(f'收到了新的payload：{data}')
     msg = message(data)
     if msg.user_id == config['options']['bot-qq']:
-        if config['options']['auto-recall']['enable'] and 'AaTMbot 发现了新的警报任务！' not in msg.message:  # 自动撤回，推送类不撤回
+        if config['options']['auto-recall']['enable'] and 'AaTMbot 发现了新的警报任务' not in msg.message:  # 自动撤回，推送类不撤回
             _thread.start_new_thread(
                 autoRecall, (msg.message_id, config['options']['auto-recall']['delay']))
     else:
@@ -127,7 +127,8 @@ def getDetail(link):    # 通过requests调用API获得详细信息
 def autoPushAlert(*args):    # 自动推送警报任务
     log.info('警报自动推送已启用，将在有新的警报时自动推送！')
     while True:
-        msg = f'AaTMbot 发现了新的警报任务！\n'
+        new_alert = False
+        msg = f'===== AaTMbot 发现了新的警报任务！=====\n'
         response = requests.get(
             f"{config['api']['address']}{config['api']['warframe']}{config['api']['warframe-path']['alerts-autopush']}")
         data = json.loads(response.text)
@@ -135,6 +136,7 @@ def autoPushAlert(*args):    # 自动推送警报任务
             log.debug('检测到当前有警报任务，正在处理……')
             for alert in data:
                 if alert['id'] not in alerts:
+                    new_alert = True
                     log.debug(f'检测到{alert["id"]}不在{alerts}中，即将进行推送')
                     alerts.append(alert['id'])
                     with open('alerts.txt', 'at', encoding='utf8') as f:
@@ -146,14 +148,15 @@ def autoPushAlert(*args):    # 自动推送警报任务
 剩余时间：{alert['eta']}
 '''
             log.debug(f'已完成推送消息的构建：{msg}')
-            if config['auto-push']['alerts']['channel']['groups']:
-                groups = config['options']['groups']
-                for group in groups:
-                    requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=group&message={msg}&group_id={group}&access_token={config["options"]["cqhttp"]["access-token"]}')
-            if config['auto-push']['alerts']['channel']['private']:
-                users = config['options']['private']
-                for user in users:
-                    requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=private&message={msg}&user_id={user}&access_token={config["options"]["cqhttp"]["access-token"]}')
+            if new_alert:
+                if config['auto-push']['alerts']['channel']['groups']:
+                    groups = config['options']['groups']
+                    for group in groups:
+                        requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=group&message={msg}&group_id={group}&access_token={config["options"]["cqhttp"]["access-token"]}')
+                if config['auto-push']['alerts']['channel']['private']:
+                    users = config['options']['private']
+                    for user in users:
+                        requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=private&message={msg}&user_id={user}&access_token={config["options"]["cqhttp"]["access-token"]}')
         time.sleep(config['auto-push']['alerts']['delay'])
             
 if __name__ == '__main__':  # 主函数
