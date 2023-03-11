@@ -35,15 +35,22 @@ if int(version[1]) < 10:
 else:
     from utils.linkParse import getLink
 
-# 已经推送过的入侵列表
+# 已经推送过的入侵和警报列表
 invasions = []
-previous_alerts = ''
+alerts = []
 if os.path.exists('invasions.txt'):
     with open('invasions.txt', encoding='utf8') as f:
         for line in f.readlines():
             invasions.append(line.replace('\n', ''))
 else:
     with open('invasions.txt', 'wt') as f:
+        f.close()
+if os.path.exists('alerts.txt'):
+    with open('alerts.txt', encoding='utf8') as f:
+        for line in f.readlines():
+            alerts.append(line.replace('\n', ''))
+else:
+    with open('alerts.txt', 'wt') as f:
         f.close()
 
 
@@ -118,21 +125,32 @@ def getDetail(link):    # 通过requests调用API获得详细信息
 
 
 def autoPushAlert(*args):    # 自动推送警报任务
-    response = requests.get(
-        f"{config['api']['address']}{config['api']['warframe']}{config['api']['warframe-path']['alerts']}")
-    if response.text != '暂无警报事件' and previous_alerts != response.text:
-        msg = f'''AaTMbot 发现了新的警报任务！
-
-{response.text}'''
-        previous_alerts = response.text
-        if config['auto-push']['alerts']['channel']['groups']:
-            groups = config['options']['groups']
-            for group in groups:
-                requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=group&message={msg}&group_id={group}&access_token={config["options"]["cqhttp"]["access-token"]}')
-        if config['auto-push']['alerts']['channel']['private']:
-            users = config['options']['private']
-            for user in users:
-                requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=private&message={msg}&user_id={user}&access_token={config["options"]["cqhttp"]["access-token"]}')
+    while True:
+        msg = f'AaTMbot 发现了新的警报任务！\n\n'
+        response = requests.get(
+            f"{config['api']['address']}{config['api']['warframe']}{config['api']['warframe-path']['alerts-autopush']}")
+        data = json.loads(response.text)
+        if data != []:
+            for alert in data:
+                if alert['id'] not in alerts:
+                    alerts.append(alert['id'])
+                    with open('alerts.txt', 'at', encoding='utf8') as f:
+                        f.write(f'{alert["id"]}\n')
+                    msg += f'''任务地点：{alert['mission']['node']}
+    任务类型：{alert['mission']['type']}
+    任务派系：{alert['mission']['faction']} ({alert['mission']['minEnemyLevel']} - {alert['mission']['maxEnemyLevel']})
+    任务奖励：{alert['mission']['reward']['asString']}
+    剩余时间：{alert['eta']}
+    '''
+            if config['auto-push']['alerts']['channel']['groups']:
+                groups = config['options']['groups']
+                for group in groups:
+                    requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=group&message={msg}&group_id={group}&access_token={config["options"]["cqhttp"]["access-token"]}')
+            if config['auto-push']['alerts']['channel']['private']:
+                users = config['options']['private']
+                for user in users:
+                    requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=private&message={msg}&user_id={user}&access_token={config["options"]["cqhttp"]["access-token"]}')
+        time.sleep(config['auto-push']['alerts']['delay'])
             
 if __name__ == '__main__':  # 主函数
     if config['auto-push']['alerts']['enable']:

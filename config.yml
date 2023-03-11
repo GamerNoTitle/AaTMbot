@@ -54,6 +54,7 @@ api:  # api列表，一般来说请不要动这个
   warframe: /wf
   warframe-path:
     alerts: /robot/alerts # 警报
+    alerts-autopush: /dev/alerts  # 自动推送警报
     news: /robot/news     # 新闻（好像没啥用，一般没人看的吧）
     events: /robot/events # 活动（热美亚啥的）
     sortie: /dev/sortie # 突击
