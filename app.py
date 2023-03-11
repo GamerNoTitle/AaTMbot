@@ -126,7 +126,7 @@ def getDetail(link):    # 通过requests调用API获得详细信息
 
 def autoPushAlert(*args):    # 自动推送警报任务
     while True:
-        msg = f'AaTMbot 发现了新的警报任务！\n\n'
+        msg = f'AaTMbot 发现了新的警报任务！\n'
         response = requests.get(
             f"{config['api']['address']}{config['api']['warframe']}{config['api']['warframe-path']['alerts-autopush']}")
         data = json.loads(response.text)
