@@ -149,6 +149,7 @@ def autoPushAlert(*args):    # 自动推送警报任务
 '''
             log.debug(f'已完成推送消息的构建：{msg}')
             if new_alert:
+                log.info('有未推送的警报任务，正在进行推送……')
                 if config['auto-push']['alerts']['channel']['groups']:
                     groups = config['options']['groups']
                     for group in groups:
@@ -157,6 +158,8 @@ def autoPushAlert(*args):    # 自动推送警报任务
                     users = config['options']['private']
                     for user in users:
                         requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=private&message={msg}&user_id={user}&access_token={config["options"]["cqhttp"]["access-token"]}')
+            else:
+                log.debug('所有警报任务都已经推送过了，不再进行推送！')
         time.sleep(config['auto-push']['alerts']['delay'])
             
 if __name__ == '__main__':  # 主函数
