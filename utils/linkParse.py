@@ -1,5 +1,6 @@
 import yaml
 from parse import parse
+from utils.responseParse import fourInOneCycle
 
 with open('./config.yml', encoding='utf8') as f:
     config = yaml.load(f.read(), Loader=yaml.SafeLoader)
@@ -146,6 +147,18 @@ def getLink(raw_message):
         case '!!zarimancycle':
             url += config['api']['warframe']
             url += config['api']['warframe-path']['zarimanCycle']
+        case '!!平原':
+            cetusCycle = url + config['api']['warframe'] + '/dev/cetusCycle'
+            vallisCycle = url + config['api']['warframe'] + '/dev/vallisCycle'
+            cambionCycle = url + config['api']['warframe'] + '/dev/cambionCycle'
+            zarimanCycle = url + config['api']['warframe'] + '/dev/zarimanCycle'
+            return fourInOneCycle(cetusCycle, vallisCycle, cambionCycle, zarimanCycle)
+        case '!!cycle':
+            cetusCycle = url + config['api']['warframe'] + '/dev/cetusCycle'
+            vallisCycle = url + config['api']['warframe'] + '/dev/vallisCycle'
+            cambionCycle = url + config['api']['warframe'] + '/dev/cambionCycle'
+            zarimanCycle = url + config['api']['warframe'] + '/dev/zarimanCycle'
+            return fourInOneCycle(cetusCycle, vallisCycle, cambionCycle, zarimanCycle)
         case default:
             noParse = True
     if noParse:

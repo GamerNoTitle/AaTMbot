@@ -1,5 +1,7 @@
 from utils.missionNode import missionNode
 from utils.invasionsParse import invasionMission
+import requests
+import json
 
 def sortieParser(data: dict, *args):
     node1, node2, node3 = data['variants']
@@ -61,4 +63,22 @@ def marketParser(data: dict, *args):
 '''
     for seller in sell_data:
         msg += f'卖家 {seller[0]} 正在以 {seller[1]} 白金的价格进行售卖，他的手上有 {seller[2]} 件该物品\n'
+    return msg
+
+def fourInOneCycle(cetusCycle, VallisCycle, cambionCycle, zarimanCycle):
+    cetus = json.loads(requests.get(cetusCycle).text)
+    cetusToState = '夜晚' if cetus['isDay'] else '白天'
+    vallis = json.loads(requests.get(VallisCycle).text)
+    vallisToState = '寒冷' if vallis['isWarm'] else '温暖'
+    cambion = json.loads(requests.get(cambionCycle).text)
+    cambionToState = 'VOME' if cambion['state'] == 'fass' else 'FASS'
+    zariman = json.loads(requests.get(zarimanCycle).text)
+    zarimanToState = 'Grineer' if zariman['isCorpus'] else 'Corpus'
+    msg = f'''===== 当前开放世界时间如下 =====
+
+希图斯：{cetus['timeLeft']} 到 {cetusToState}
+金星平原：{vallis['timeLeft']} 到 {vallisToState}
+魔胎之境：{cambion['timeLeft']} 到 {cambionToState}
+扎里曼号：{zariman['timeLeft']} 到 {zarimanToState}
+'''
     return msg
