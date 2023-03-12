@@ -3,7 +3,9 @@ from parse import parse
 from utils.logger import logger
 from utils.message import message
 from utils.responseParse import *
+from utils.thirdPartyParser import *
 from utils.const import help_msg, about_msg
+from utils.autoPushTask import autoPushAlert
 import time
 import requests
 import yaml
@@ -35,24 +37,6 @@ if int(version[1]) < 10:
 else:
     from utils.linkParse import getLink
 
-# 已经推送过的入侵和警报列表
-invasions = []
-alerts = []
-if os.path.exists('invasions.txt'):
-    with open('invasions.txt', encoding='utf8') as f:
-        for line in f.readlines():
-            invasions.append(line.replace('\n', ''))
-else:
-    with open('invasions.txt', 'wt') as f:
-        f.close()
-if os.path.exists('alerts.txt'):
-    with open('alerts.txt', encoding='utf8') as f:
-        for line in f.readlines():
-            alerts.append(line.replace('\n', ''))
-else:
-    with open('alerts.txt', 'wt') as f:
-        f.close()
-
 
 @app.route('/', methods=['GET', 'POST'])
 def Handler():
@@ -72,26 +56,52 @@ def Handler():
         elif msg.message in ['!!about', '!!关于']:
             content = about_msg
         else:
-            link = getLink(msg.message)
+            command, *args = msg.message.split(' ')
+            # if command in ['/fissure', '/裂缝', '/虚空裂缝']:
+            #     if len(args) == 0:
+            #         link = getLink(command)
+            #         content = fissureParser(json.loads(getDetail(link)), args)
+            link = getLink(command)
             if not link.startswith('https://'):
-                log.debug(f'消息 {msg.message} 无法解析出对应的链接')
+                log.debug(f'已完成处理的消息 {msg.message}')
                 content = link
-            elif '/wf/dev/' in link and not 'robot' in link:
-                log.debug(f'由消息 {msg.message} 解析得到api链接 {link}')
-                content = json.loads(getDetail(link))
-                access_protocol = link.split('/')[-1]
-                json_parser = {
-                    'sortie': sortieParser,
-                    'invasions': invasionParser,
-                }
-                content = json_parser[access_protocol](content, invasions)
-            elif '/wm/dev/' in link:
-                log.debug(f'由消息 {msg.message} 解析得到api链接 {link}')
-                content = json.loads(getDetail(link))
-                content = marketParser(content)
             else:
                 log.debug(f'由消息 {msg.message} 解析得到api链接 {link}')
-                content = getDetail(link)
+                if f"{config['api']['third-party']['base-url']}{config['api']['third-party']['market']}" in link:
+                    content = marketParser(json.loads(getDetail(link)))
+                elif f"{config['api']['third-party']['base-url']}{config['api']['third-party']['riven']}" in link:
+                    content = rivenParser(json.loads(getDetail(link)))
+                else:
+                    data = getDetail(link)
+                    try:
+                        content = json.loads(data)
+                    except json.decoder.JSONDecodeError:
+                        content = data
+                    access_protocol = link.split('/')[-1].lower()
+                    json_parser = {
+                        'alerts': alertsParser,
+                        'news': newsParser,
+                        'events': eventsParser,
+                        'sortie': sortieParser,
+                        'ostrons': ostronsParser,
+                        'solaris': solarisParser,
+                        'entratisyndicate': entratiSyndicateParser,
+                        'fissures': fissureParser,
+                        'flashsales': flashSaleParser,
+                        'invasions': invasionParser,
+                        'voidtrader': voidTraderParser,
+                        'dailydeals': dailyDealsParser,
+                        'earthcycle': earthCycleParser,
+                        'cetuscycle': cetusCycleParser,
+                        'constructionprogress': constructionProgressParser,
+                        'valliscycle': vallisCycleParser,
+                        'nightwave': nightwaveParser,
+                        'arbitration': arbitrationParser,
+                        'cambioncycle': cambionCycleParser,
+                        'zarimancycle': zarimanCycleParser,
+                        'archonhunt': archonHuntParser
+                    }
+                    content = json_parser[access_protocol](content, args)
         msgSender(msg, content)
     return 'Hello World'
 
@@ -119,51 +129,16 @@ def msgSender(msg: message, content):   # 消息发送
 
 
 def getDetail(link):    # 通过requests调用API获得详细信息
-    response = requests.get(link).text
+    if 'api.warframestat.us' in link:
+        link += '/?language=zh'
+    response = requests.get(link, headers={'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6'}).text
     log.debug(f'调用了 {link}，得到了如下的信息：{response}')
     return response
 
 
-def autoPushAlert(*args):    # 自动推送警报任务
-    log.info('警报自动推送已启用，将在有新的警报时自动推送！')
-    while True:
-        new_alert = False
-        msg = f'===== AaTMbot 发现了新的警报任务！=====\n'
-        response = requests.get(
-            f"{config['api']['address']}{config['api']['warframe']}{config['api']['warframe-path']['alerts-autopush']}")
-        data = json.loads(response.text)
-        if data != []:
-            log.debug('检测到当前有警报任务，正在处理……')
-            for alert in data:
-                if alert['id'] not in alerts:
-                    new_alert = True
-                    log.debug(f'检测到{alert["id"]}不在{alerts}中，即将进行推送')
-                    alerts.append(alert['id'])
-                    with open('alerts.txt', 'at', encoding='utf8') as f:
-                        f.write(f'{alert["id"]}\n')
-                    msg = msg + f'''任务地点：{alert['mission']['node']}
-任务类型：{alert['mission']['type']}
-任务派系：{alert['mission']['faction']} ({alert['mission']['minEnemyLevel']} - {alert['mission']['maxEnemyLevel']})
-任务奖励：{alert['mission']['reward']['asString']}
-剩余时间：{alert['eta']}
-'''
-            if new_alert:
-                log.debug(f'已完成推送消息的构建：{msg}')
-                log.info('有未推送的警报任务，正在进行推送……')
-                if config['auto-push']['alerts']['channel']['groups']:
-                    groups = config['options']['groups']
-                    for group in groups:
-                        requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=group&message={msg}&group_id={group}&access_token={config["options"]["cqhttp"]["access-token"]}')
-                if config['auto-push']['alerts']['channel']['private']:
-                    users = config['options']['private']
-                    for user in users:
-                        requests.get(f'{config["options"]["cqhttp"]["address"]}/send_msg?&message_type=private&message={msg}&user_id={user}&access_token={config["options"]["cqhttp"]["access-token"]}')
-            else:
-                log.debug('所有警报任务都已经推送过了，不再进行推送！')
-        time.sleep(config['auto-push']['alerts']['delay'])
-            
 if __name__ == '__main__':  # 主函数
     if config['auto-push']['alerts']['enable']:
-        log.info(f'检测到自动撤回启用，每次bot消息发送后将在 {config["options"]["auto-recall"]["delay"]} 秒后自动撤回')
-        _thread.start_new_thread(autoPushAlert, (None,))
+        log.info(
+            f'检测到自动撤回启用，每次bot消息发送后将在 {config["options"]["auto-recall"]["delay"]} 秒后自动撤回')
+        _thread.start_new_thread(autoPushAlert, (log,))
     app.run(host=host, port=port, debug=False)

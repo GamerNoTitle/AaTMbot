@@ -7,3 +7,4 @@ class invasionMission:
         self.attackReward = data['attackerReward']['asString']
         self.defendReward = data['defenderReward']['asString']
         self.requiredRuns = data['requiredRuns']
+        self.eta = data['eta']
