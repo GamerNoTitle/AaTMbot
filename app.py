@@ -61,16 +61,24 @@ def Handler():
             #     if len(args) == 0:
             #         link = getLink(command)
             #         content = fissureParser(json.loads(getDetail(link)), args)
-            link = getLink(command)
+            link = getLink(command, args)
             if not link.startswith('https://'):
                 log.debug(f'已完成处理的消息 {msg.message}')
                 content = link
             else:
                 log.debug(f'由消息 {msg.message} 解析得到api链接 {link}')
                 if f"{config['api']['third-party']['base-url']}{config['api']['third-party']['market']}" in link:
-                    content = marketParser(json.loads(getDetail(link)))
+                    try:
+                        market_data = getDetail(link)
+                        content = marketParser(json.loads(market_data))
+                    except json.decoder.JSONDecodeError:
+                        content = market_data
                 elif f"{config['api']['third-party']['base-url']}{config['api']['third-party']['riven']}" in link:
-                    content = rivenParser(json.loads(getDetail(link)))
+                    try:
+                        riven_data = getDetail(link)
+                        content = rivenParser(json.loads(riven_data))
+                    except json.decoder.JSONDecodeError:
+                        content = riven_data
                 else:
                     data = getDetail(link)
                     try:

@@ -6,7 +6,7 @@ with open('./config.yml', encoding='utf8') as f:
     config = yaml.load(f.read(), Loader=yaml.SafeLoader)
 
 
-def getLink(raw_message):
+def getLink(raw_message, *args):
     noParse = False
     url = config['api']['official']['base-url']
     match raw_message:  # 匹配规则，不满足的写在后面（要解析的那些）
@@ -126,18 +126,12 @@ def getLink(raw_message):
             noParse = True
     if noParse:
         if raw_message.startswith('!!市场') or raw_message.startswith('!!market'):
-            parsed = parse('!!市场 {item}', raw_message)
-            url += config['api']['market']
-            if type(parsed) == type(None):
-                parsed = parse('!!market {item}', raw_message)
-            url += parsed['item']
+            url = config['api']['third-party']['base-url'] + config['api']['third-party']['market']
+            url += args[0][0]
             return url
         elif raw_message.startswith('!!紫卡') or raw_message.startswith('!!riven'):
-            parsed = parse('!!紫卡 {item}', raw_message)
-            url += config['api']['riven']
-            if type(parsed) == type(None):
-                parsed = parse('!!riven {item}', raw_message)
-            url += parsed['item']
+            url = config['api']['third-party']['base-url'] + config['api']['third-party']['riven']
+            url += args[0][0]
             return url
         elif raw_message.startswith('!!zariman') or raw_message.startswith('!!扎里曼赏金'): # DE开放了再改
             return '[ERROR] 无法查询扎里曼赏金，因为DE不给接口'

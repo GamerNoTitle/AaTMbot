@@ -90,16 +90,50 @@ def entratiSyndicateParser(data, *args):
     return data
 
 
-def fissureParser(data: dict, *args):
-    if len(args) == 0:
-        pass
+def fissureParser(data: list, *args):
+    print(args)
+    normal = ''
+    hard = ''
+    storm = ''
+    for fissure in data:
+        if fissure['isStorm'] and not fissure['eta'].startswith('-'):
+            storm += f'''\n任务节点：{fissure['node']}
+任务类型：{fissure['missionType']}（{fissure['tier']}）
+剩余时间：{fissure['eta']}
+'''
+        elif fissure['isHard'] and not fissure['eta'].startswith('-'):
+            hard += f'''\n任务节点：{fissure['node']}
+任务类型：{fissure['missionType']}（{fissure['tier']}）
+剩余时间：{fissure['eta']}
+'''
+        elif not fissure['eta'].startswith('-'):
+            normal += f'''\n任务节点：{fissure['node']}
+任务类型：{fissure['missionType']}（{fissure['tier']}）
+剩余时间：{fissure['eta']}
+'''
+    if len(args[0]) == 0:
+        msg = f'''为您找到以下裂缝信息
+===== 普通裂缝 =====
+{normal}
+
+===== 九重天裂缝 =====
+{storm}
+
+===== 钢铁裂缝 =====
+{hard}'''
     else:
-        if args[0].lower() not in ['钢铁', '钢铁之路', 'hard', '比邻星', '九重天', '飞机', 'storm']:
-            return f'[ERROR] 无效的筛选对象 {args[0]}！'
-        if args[0].lower() in ['钢铁', '钢铁之路', 'hard']: # 钢铁
-            pass
-        else:   # 比邻星
-            pass
+        if args[0][0].lower() not in ['钢铁', '钢铁之路', 'hard', '比邻星', '九重天', '飞机', 'storm', '普通', 'normal']:
+            return f'[ERROR] 无效的筛选对象 {args[0][0]}！'
+        if args[0][0].lower() in ['钢铁', '钢铁之路', 'hard']: # 钢铁
+            msg = f'''为您找到筛选条件为 {args[0][0]} 的裂缝信息
+{hard}'''
+        elif args[0][0].lower() in ['比邻星', '九重天', '飞机', 'storm']:   # 比邻星
+            msg = f'''为您找到筛选条件为 {args[0][0]} 的裂缝信息
+{storm}'''
+        else:
+            msg = f'''为您找到筛选条件为 {args[0][0]} 的裂缝信息
+{normal}'''
+    return msg
 
 
 def flashSaleParser(data: list, *args):
