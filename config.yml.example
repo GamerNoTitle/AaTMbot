@@ -77,4 +77,4 @@ api:  # api列表，一般来说请不要动这个
       solaris: /wf/robot/Solaris  # 金星赏金
       entratiSyndicate: /wf/robot/EntratiSyndicate  # 火卫二赏金
     market: /wm/dev/
-    riven: /rm/dev/
+    riven: /rm/robot/
