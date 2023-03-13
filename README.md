@@ -71,7 +71,7 @@ auto-push:
 
 options:
   # 这里是一些配置，bot-qq就是用于发送消息的bot的QQ号（因为涉及到自动撤回所以请正确填写）
-  bot-qq: 2436146394
+  bot-qq: -1
   cqhttp: 
     # 这个是cqhttp的地址，在address处填写你的cqhttp的http监听地址，access-token处填写你的cqhttp的鉴权token
     address: http://127.0.0.1:5700
@@ -81,7 +81,7 @@ options:
     enable: true
     delay: 60
   groups:
-    # 进行响应的群组，就是对哪些群组的消息进行响应，没有在这里填写群号的群组即使发送了指令也不会有相应，输入*表示对所有群组进行响应，建议输入*的同时输入你需要进行呢警报推送的群号，要不然警报推送推不过去的
+    # 进行响应的群组，就是对哪些群组的消息进行响应，没有在这里填写群号的群组即使发送了指令也不会有相应，输入0表示对所有群组进行响应，建议输入*的同时输入你需要进行呢警报推送的群号，要不然警报推送推不过去的
     - -1
   private:
     # 进行响应的私聊，跟群组的逻辑差不多，同样用*来表示对所有响应，同样也影响警报的推送
@@ -94,31 +94,34 @@ options:
 ##########               请不要修改下面的内容，除非你知道你在干什么！           ##########
 
 api:  # api列表，一般来说请不要动这个
-  address: https://wfapi.bili33.top
-  warframe: /wf
-  warframe-path:
-    alerts: /robot/alerts # 警报
-    news: /robot/news     # 新闻（好像没啥用，一般没人看的吧）
-    events: /robot/events # 活动（热美亚啥的）
-    sortie: /dev/sortie # 突击
-    ostrons: /robot/Ostrons # 地球赏金
-    solaris: /robot/Solaris # 金星赏金
-    entratiSyndicate: /robot/EntratiSyndicate # 火卫二赏金
-    fissures: /robot/fissures # 虚空裂缝
-    flashSales: /robot/flashSales # 每日促销（商店里面的）
-    invasions: /robot/invasions # 入侵
-    voidTrader: /robot/voidTrader # 奸商
-    dailyDeals: /robot/dailyDeals # Darvo的特惠
-    earthCycle: /robot/earthCycle # 地球时间（USELESS，谁看这个呀，除非你要做蝶妹的任务）
-    cetusCycle: /robot/cetusCycle # 西图斯时间（跟上面那个地球时间是不一样的）
-    constructionProgress: /robot/constructionProgress # 巨人战舰和豺狼舰队
-    vallisCycle: /robot/vallisCycle # 索拉里斯时间
-    nightwave: /robot/nightwave # 午夜电波任务
-    arbitration: /robot/arbitration # 仲裁
-    cambionCycle: /robot/cambionCycle # 火卫二时间（FASS还是VOME）
-    zarimanCycle: /robot/zarimanCycle # 扎里曼占领情况
-  market: /wm/dev/
-  riven: /rm/robot/
+  official: 
+    base-url: https://api.warframestat.us/pc
+    alerts: /alerts # 警报
+    news: /news     # 新闻（好像没啥用，一般没人看的吧）
+    events: /events # 活动（热美亚啥的）
+    sortie: /sortie # 突击
+    fissures: /fissures # 虚空裂缝
+    flashSales: /flashSales # 每日促销（商店里面的）
+    invasions: /invasions # 入侵
+    voidTrader: /voidTrader # 奸商
+    dailyDeals: /dailyDeals # Darvo的特惠
+    earthCycle: /earthCycle # 地球时间（USELESS，谁看这个呀，除非你要做蝶妹的任务）
+    cetusCycle: /cetusCycle # 西图斯时间（跟上面那个地球时间是不一样的）
+    constructionProgress: /constructionProgress # 巨人战舰和豺狼舰队
+    vallisCycle: /vallisCycle # 索拉里斯时间
+    nightwave: /nightwave # 午夜电波任务
+    arbitration: /arbitration # 仲裁
+    cambionCycle: /cambionCycle # 火卫二时间（FASS还是VOME）
+    zarimanCycle: /zarimanCycle # 扎里曼占领情况
+    archonHunt: /archonHunt # 执行官
+  third-party:
+    base-url: https://wfapi.bili33.top
+    warframe:
+      ostrons: /wf/robot/Ostrons  # 地球赏金
+      solaris: /wf/robot/Solaris  # 金星赏金
+      entratiSyndicate: /wf/robot/EntratiSyndicate  # 火卫二赏金
+    market: /wm/dev/
+    riven: /rm/robot/
 ```
 
 需要修改的地方在上面我标记了出来，请根据自己的需要修改
