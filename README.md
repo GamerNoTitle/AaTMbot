@@ -178,7 +178,7 @@ servers:
 | !!关于            | 显示关于bot信息                                              | -                                             | `!!about`                                   |
 | !!警报            | 显示当前可用警报                                             | -                                            | `!!alerts`                                  |
 | !!新闻            | 显示Warframe官方新闻                                         | -                                        | `!!news`                                    |
-| !!活动            | 显示游戏内活动**（咕了，有空再写，欢迎PR，参考数据放在 #1）**         | -                                              | `!!events`                                  |
+| !!活动            | 显示游戏内活动<b>（咕了，有空再写，欢迎PR，参考数据放在 [#1](https://github.com/GamerNoTitle/AaTMbot/issues/1)）</b> | -                                              | `!!events`                                  |
 | !!突击            | 显示今日突击                                                 | -                                                | `!!sortie`                                  |
 | !!地球赏金        | 显示地球赏金任务                                             | -                                            | `!!ostrons` `!!cetus`                        |
 | !!金星赏金        | 显示金星赏金任务                                             | -                                            | `!!solaris`                                 |
@@ -196,7 +196,7 @@ servers:
 | !!仲裁            | 显示仲裁警报                                                 |                                                  | `!!arbitration`                             |
 | !!扎里曼          | 显示扎里曼占领情况                                           |                                            | `!!扎里曼派系` `!!zarimancycle`              |
 | !!市场 <物品名称> | 查询物品在Warframe.market上的价格（截取最多前10条价格最低且在线） |  | `!!market <item>`                           |
-| !!紫卡 <武器名称> | 查询相应武器的紫卡在riven.market上的价格（截取前5条价格最低）**（咕了，有空再写，欢迎PR，参考数据放在 #1）** |  | `!!riven <weapon>`                          |
+| !!紫卡 <武器名称> | 查询相应武器的紫卡在riven.market上的价格（截取前5条价格最低）<b>（咕了，有空再写，欢迎PR，参考数据放在 [#1](https://github.com/GamerNoTitle/AaTMbot/issues/1）</b> |  | `!!riven <weapon>`                          |
 
 ## 赞助
 
