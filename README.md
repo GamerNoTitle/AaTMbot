@@ -196,7 +196,7 @@ servers:
 | !!仲裁            | 显示仲裁警报                                                 |                                                  | `!!arbitration`                             |
 | !!扎里曼          | 显示扎里曼占领情况                                           |                                            | `!!扎里曼派系` `!!zarimancycle`              |
 | !!市场 <物品名称> | 查询物品在Warframe.market上的价格（截取最多前10条价格最低且在线） |  | `!!market <item>`                           |
-| !!紫卡 <武器名称> | 查询相应武器的紫卡在riven.market上的价格（截取前5条价格最低）<b>（咕了，有空再写，欢迎PR，参考数据放在 [#1](https://github.com/GamerNoTitle/AaTMbot/issues/1）</b> |  | `!!riven <weapon>`                          |
+| !!紫卡 <武器名称> | 查询相应武器的紫卡在riven.market上的价格（截取前5条价格最低）<b>（咕了，有空再写，欢迎PR，参考数据放在 [#1](https://github.com/GamerNoTitle/AaTMbot/issues/1)）</b> |  | `!!riven <weapon>`                          |
 
 ## 赞助
 
